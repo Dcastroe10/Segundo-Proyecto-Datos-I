@@ -1,2 +1,2 @@
 # Segundo-Proyecto-Datos-I
-Evaluación de expresiones matemáticas por medio de árboles de expresión
+Desarrollo de una calculadora en Java basada en sockets que utilice árboles de expresión para evaluar expresiones matemáticas.

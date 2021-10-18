@@ -1,4 +1,5 @@
 public class Node {
+    /*
     //Atributos de la clase
     public Object data; //lo que guarda el nodo
     public Node prev;  // puntero hacia el nodo anterior
@@ -38,4 +39,5 @@ public class Node {
     public void setNext(Node node){
         this.next = node;
     }
+    */
 }

@@ -1,43 +1,36 @@
 public class Node {
-    /*
-    //Atributos de la clase
-    public Object data; //lo que guarda el nodo
-    public Node prev;  // puntero hacia el nodo anterior
-    public Node next;  // puntero hacia el nodo siguiente
+    public Object data;
+    public Node left;
+    public Node right;
 
-    // METODO CONSTRUCTOR
     public Node(Object data){
         this.data = data;
-        this.prev = null;
-        this.next = null;
+        this.left = null;
+        this.right = null;
     }
 
-    // Metodo para obtener el dato asociado al nodo
     public Object getData(){
         return this.data;
     }
 
-    // Metodo para modificar lo que guarda el nodo
     public void setData(Object data){
         this.data = data;
     }
 
-    // Metodo para conocer a quien apunta puntero prev
-    public Node getPrev(){
-        return this.prev;
-    }
-    // Metodo para modificar a quien apunta puntero prev
-    public void setPrev(Node node){
-        this.prev = node;
+    public Node getLeft(){
+        return this.left;
     }
 
-    // Metodo para conocer a quien apunta puntero next
-    public Node getNext(){
-        return this.next;
+    public void setLeft(Node node){
+        this.left = node;
     }
-    // Metodo para modificar a quien apunta puntero next
-    public void setNext(Node node){
-        this.next = node;
+
+    public Node getRight(){
+        return this.right;
     }
-    */
+
+    public void setRight(Node node){
+        this.right = node;
+    }
+
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.Stack;
 
 public class Interface{
 
@@ -67,7 +68,7 @@ public class Interface{
         button7.addActionListener(e -> textField.setText(textField.getText() + "9"));
         JButton button8 = new JButton("x");
         button8.setFont(buttonsFont);
-        button8.addActionListener(e -> textField.setText(textField.getText() + " x "));
+        button8.addActionListener(e -> textField.setText(textField.getText() + " * "));
         buttonRow2.add(button5);
         buttonRow2.add(button6);
         buttonRow2.add(button7);
@@ -125,16 +126,29 @@ public class Interface{
         // Sixth Panel that contents the fifth and last row of buttons
         JPanel buttonRow5 = new JPanel();
         buttonRow5.setLayout(new GridLayout(1,4,10,10));
-        JButton button17 = new JButton("000");
+        JButton button17 = new JButton("(");
         button17.setFont(buttonsFont);
-        button17.addActionListener(e -> textField.setText(textField.getText() + "000"));
-        JButton button18 = new JButton("0");
+        button17.addActionListener(e -> textField.setText(textField.getText() + "("));
+        JButton button18 = new JButton(")");
         button18.setFont(buttonsFont);
-        button18.addActionListener(e -> textField.setText(textField.getText() + "0"));
+        button18.addActionListener(e -> textField.setText(textField.getText() + ")"));
         JButton button19 = new JButton(",");
         button19.setFont(buttonsFont);
         button19.addActionListener(e -> textField.setText(textField.getText() + ","));
         JButton button20 = new JButton("=");
+        button20.addActionListener(e ->{
+            //System.out.println(textField.getText().charAt(0));
+            String expresion = textField.getText().replace(" ", "");
+            expresion = this.encrypt(expresion);
+            System.out.println(this.postfix2(expresion));
+            System.out.println(this.postfix(expresion));
+
+            //Expression_tree tree = new Expression_tree(expresion);
+
+
+
+        }
+        );
         button20.setFont(buttonsFont);
         //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
         buttonRow5.add(button17);
@@ -168,6 +182,112 @@ public class Interface{
         root.setVisible(true);
         // End of the main frame
         //------------------------------------------------------------------
+    }
+    public String postfix(String data){
+        String expresion = data;
+        Stack stack = new Stack();
+        String result = "";
+        //Boolean
+
+        for (int i = 0; i < data.length()-1; i++) {
+            char character = data.charAt(i);
+            if (character=='P' && data.charAt(i+1)!='(' && !operador(data.charAt(i+1))){
+                result+="P";
+            }else if (!operador(character) && character!='(' && character != ')' && character!='P') {
+                result += character;
+
+            } else if (operador(character)) {
+                stack.push(character);
+
+            } else if (character ==')') {;
+                while (!stack.empty()){
+                    result +=stack.pop();
+                }
+
+            }
+        }
+        return result += "P"; // se agrega la última P no sé si es necesaria lol
+
+
+    }
+
+    public String postfix2(String data){
+        String expresion = data;
+        Stack stack = new Stack();
+        String result = "";
+        //Boolean
+
+        for (int i = 0; i < data.length()-1; i++) {
+            char character = data.charAt(i);
+            if (character=='P' && data.charAt(i+1)!='(' && !operador(data.charAt(i+1))){
+                result+="";
+            }else if (!operador(character) && character!='(' && character != ')' && character!='P') {
+                result += character;
+
+            } else if (operador(character)) {
+                stack.push(character);
+
+            } else if (character ==')') {;
+                while (!stack.empty()){
+                    result +=stack.pop();
+                }
+
+            }
+        }
+        return result; // se agrega la última P no sé si es necesaria lol
+
+
+    }
+
+    public boolean operador(char f){
+        if (f == '+'){
+            return true;
+        }else if (f == '-'){
+            return true;
+        }else if (f == '*'){
+            return true;
+        }else if (f == '/'){
+            return true;
+        }else if (f == '%'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public String encrypt(String to_encrypt){
+        String result = "";
+        for (int i = 0; i < to_encrypt.length(); i++){
+            if(!simbolos(to_encrypt.charAt(i))){
+                result += String.valueOf(to_encrypt.charAt(i));
+            }else if (simbolos(to_encrypt.charAt(i))){
+                result += "P" + to_encrypt.charAt(i) +"P";
+            }
+            }
+       //System.out.println(result);
+        return result+ "P";
+        }
+
+
+
+    public boolean simbolos(char f){
+        if (f == '+'){
+            return true;
+        }else if (f == '-'){
+            return true;
+        }else if (f == '*'){
+            return true;
+        }else if (f == '/'){
+            return true;
+        }else if (f == '%'){
+            return true;
+        }else if (f == '('){
+            return true;
+        }else if (f == ')') {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public static void main(String[] args) {

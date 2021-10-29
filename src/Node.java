@@ -2,11 +2,13 @@ public class Node {
     public Object data;
     public Node left;
     public Node right;
+    public String type;
 
-    public Node(Object data){
+    public Node(Object data){ //add type, si es operando o numero
         this.data = data;
-        this.left = null;
         this.right = null;
+        this.left = null;
+        this.type = "";
     }
 
     public Object getData(){

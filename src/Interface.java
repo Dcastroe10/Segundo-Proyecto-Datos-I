@@ -137,13 +137,14 @@ public class Interface{
         button19.addActionListener(e -> textField.setText(textField.getText() + ","));
         JButton button20 = new JButton("=");
         button20.addActionListener(e ->{
-            //System.out.println(textField.getText().charAt(0));
+            String for_tree;
             String expresion = textField.getText().replace(" ", "");
             expresion = this.encrypt(expresion);
-            System.out.println(this.postfix2(expresion));
-            System.out.println(this.postfix(expresion));
-
-            //Expression_tree tree = new Expression_tree(expresion);
+            String for_me = this.postfix2(expresion);
+            System.out.println(for_me);
+            for_tree = this.postfix(expresion);
+            //System.out.println(for_tree);
+            Expression_tree tree = new Expression_tree(for_tree);
 
 
 

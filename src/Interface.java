@@ -45,7 +45,7 @@ public class Interface{
         button3.addActionListener(e -> textField.setText(""));
         JButton button4 = new JButton("÷");
         button4.setFont(buttonsFont);
-        button4.addActionListener(e -> textField.setText(textField.getText() + " ÷ "));
+        button4.addActionListener(e -> textField.setText(textField.getText() + " / "));
         buttonRow1.add(button1);
         buttonRow1.add(button2);
         buttonRow1.add(button3);
@@ -132,18 +132,20 @@ public class Interface{
         JButton button18 = new JButton(")");
         button18.setFont(buttonsFont);
         button18.addActionListener(e -> textField.setText(textField.getText() + ")"));
-        JButton button19 = new JButton(",");
+        JButton button19 = new JButton("0");
         button19.setFont(buttonsFont);
-        button19.addActionListener(e -> textField.setText(textField.getText() + ","));
+        button19.addActionListener(e -> textField.setText(textField.getText() + "0"));
         JButton button20 = new JButton("=");
-        button20.addActionListener(e ->{
+        button20.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR
+
             String for_tree;
             String expresion = textField.getText().replace(" ", "");
             expresion = this.encrypt(expresion);
             String for_me = this.postfix2(expresion);
             System.out.println(for_me);
             for_tree = this.postfix(expresion);
-            //System.out.println(for_tree);
+            System.out.println(for_tree);
+            System.out.println(operandos(for_tree));
             Expression_tree tree = new Expression_tree(for_tree);
 
 
@@ -256,19 +258,28 @@ public class Interface{
         }
     }
 
-    public String encrypt(String to_encrypt){
+    public String encrypt(String to_encrypt) {
         String result = "";
-        for (int i = 0; i < to_encrypt.length(); i++){
-            if(!simbolos(to_encrypt.charAt(i))){
+        for (int i = 0; i < to_encrypt.length(); i++) {
+            if (!simbolos(to_encrypt.charAt(i))) {
                 result += String.valueOf(to_encrypt.charAt(i));
-            }else if (simbolos(to_encrypt.charAt(i))){
-                result += "P" + to_encrypt.charAt(i) +"P";
+            } else if (simbolos(to_encrypt.charAt(i))) {
+                result += "P" + to_encrypt.charAt(i) + "P";
             }
-            }
-       //System.out.println(result);
-        return result+ "P";
         }
+        //System.out.println(result);
+        return result + "P";
+    }
 
+    public int operandos(String for_tree){
+        int result=0;
+        for (int i=0;i<for_tree.length();i++ ){
+            if (operador(for_tree.charAt(i))){
+                result++;
+            }
+        }
+        return result;
+        }
 
 
     public boolean simbolos(char f){

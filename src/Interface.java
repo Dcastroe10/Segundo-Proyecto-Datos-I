@@ -143,9 +143,12 @@ public class Interface{
             expresion = this.encrypt(expresion);
             String for_me = this.postfix2(expresion);
             System.out.println(for_me);
+            //System.out.println(operadores(for_me)+"aaaaaaaaaaaaaaaaaaaaa");
             for_tree = this.postfix(expresion);
             System.out.println(for_tree);
-            System.out.println(operandos(for_tree));
+            create_tree(for_tree,true,false,1,"","");
+
+            //System.out.println(cant_operandos(for_tree));
             Expression_tree tree = new Expression_tree(for_tree);
 
 
@@ -214,6 +217,23 @@ public class Interface{
 
     }
 
+    public String operadores(String for_me){
+        String result="";
+        String invertidos ="";
+        for (int i = for_me.length()-1; i>=0;i--){
+            if(operador(for_me.charAt(i))){
+                invertidos+=for_me.charAt(i);
+                System.out.println(for_me.charAt(i));
+            }
+        }
+        for (int i =0; i<for_me.length(); i++){
+            if(operador(for_me.charAt(i))){
+                result+=for_me.charAt(i);
+            }
+        }
+        return result + "KAKA" + invertidos;
+    }
+
     public String postfix2(String data){
         String expresion = data;
         Stack stack = new Stack();
@@ -271,7 +291,7 @@ public class Interface{
         return result + "P";
     }
 
-    public int operandos(String for_tree){
+    public int cant_operandos(String for_tree){
         int result=0;
         for (int i=0;i<for_tree.length();i++ ){
             if (operador(for_tree.charAt(i))){
@@ -300,6 +320,64 @@ public class Interface{
         }else {
             return false;
         }
+    }
+
+    public void create_tree(String postfix, boolean izquierda, boolean derecha, int indice, String data_left, String data_right){ //expresión,true,false PARA LA PRIMERA VEZ
+        Node left;
+        Node right;
+        Node root;
+        if (izquierda &&data_left=="") {
+            for (int i = indice; i < postfix.length(); i++) {
+                if (postfix.charAt(i) != 'P'){// && !operador(postfix.charAt(i))) {
+                    data_left += postfix.charAt(i);
+                }
+                if (postfix.charAt(i) == 'P'){
+                    break;
+                }
+                indice=i;
+            }
+            System.out.println(data_left+"-------------");
+            while (postfix.charAt(indice)!= 'P'){
+                indice+=1;
+            }
+            create_tree(postfix,false,true,indice,data_left,data_right);
+        }
+
+        System.out.println("indice:" + Integer.toString(indice+1));// la idea es para work recursivo digamos para probar
+        System.out.println(postfix.charAt(indice+1));
+        //create_tree(postfix, false,true,indice);
+        if (derecha) {
+            for (int i = indice; i < postfix.length(); i++) {
+                if (postfix.charAt(i) != 'P'){// && !operador(postfix.charAt(i))) {
+                    data_right += postfix.charAt(i);
+                }
+                if (postfix.charAt(i) == 'P'){
+                    break;
+                }
+            }
+        }
+        /*
+        while (!operador(postfix.charAt(indice))){
+            indice++;
+        }
+         */
+
+
+
+    }
+
+    public String get_number(String postfix, int indice){
+        String result ="";
+
+        for (int i = indice; i<postfix.length(); i++){
+            if (!operador(postfix.charAt(i)) && postfix.charAt(i) != 'P'){
+                result+=postfix.charAt(i);
+            }if(postfix.charAt(i)=='P'){
+                break;
+            }
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {

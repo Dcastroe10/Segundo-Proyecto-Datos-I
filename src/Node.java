@@ -10,6 +10,11 @@ public class Node {
         this.left = null;
         this.type = "";
     }
+    public Node(){
+        this.right = null;
+        this.left = null;
+        this.type= "";
+    }
 
     public Object getData(){
         return this.data;
@@ -17,6 +22,14 @@ public class Node {
 
     public void setData(Object data){
         this.data = data;
+    }
+
+    public Object getType(){
+        return this.type;
+    }
+
+    public void setType(String type){
+        this.type = type;
     }
 
     public Node getLeft(){

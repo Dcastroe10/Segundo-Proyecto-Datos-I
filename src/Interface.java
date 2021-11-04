@@ -144,11 +144,9 @@ public class Interface{
             expresion = this.encrypt(expresion);
             expresion = this.encrypt(expresion); //IMPORTANTE PARA PONERLE LAS DIVISIONES A LOS NÚMEROS
             String for_me = this.postfix_for_me(expresion);
-
-            //System.out.println(operadores(for_me)+"aaaaaaaaaaaaaaaaaaaaa");
             for_tree = this.postfix(expresion);
             System.out.println(for_tree);
-            create_tree(for_tree,true,false,1,"","");
+            //create_tree(for_tree,true,false,1,"","");
 
             //create_tree(for_tree,true,false,1,"","");
 
@@ -160,7 +158,7 @@ public class Interface{
             Expression_tree prueba1 = new Expression_tree(for_tree);
             System.out.println("FINISH");
             //System.out.println(cant_operandos(for_tree));
-            Expression_tree tree = new Expression_tree(for_tree);
+            //Expression_tree tree = new Expression_tree(for_tree);
 
 
 
@@ -188,10 +186,8 @@ public class Interface{
                 JButton button23 = new JButton("0");
                 button23.setFont(buttonsFont);
                 button23.addActionListener(e -> textField.setText(textField.getText() + "0"));
-                JButton button24 = new JButton("=");
-                button24.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR
-                        }
-                );
+                JButton button24 = new JButton("%");
+                button24.addActionListener(e -> textField.setText(textField.getText() + "%"));
 
                 button21.setFont(buttonsFont);
                 //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class Interface{
@@ -127,15 +126,15 @@ public class Interface{
         // Sixth Panel that contents the fifth and last row of buttons
         JPanel buttonRow5 = new JPanel();
         buttonRow5.setLayout(new GridLayout(1,4,10,10));
-        JButton button17 = new JButton("0");
+        JButton button17 = new JButton("(");
         button17.setFont(buttonsFont);
-        button17.addActionListener(e -> textField.setText(textField.getText() + "0"));
-        JButton button18 = new JButton("00");
+        button17.addActionListener(e -> textField.setText(textField.getText() + "("));
+        JButton button18 = new JButton(")");
         button18.setFont(buttonsFont);
-        button18.addActionListener(e -> textField.setText(textField.getText() + "00"));
-        JButton button19 = new JButton("000");
+        button18.addActionListener(e -> textField.setText(textField.getText() + ")"));
+        JButton button19 = new JButton("0");
         button19.setFont(buttonsFont);
-        button19.addActionListener(e -> textField.setText(textField.getText() + "000"));
+        button19.addActionListener(e -> textField.setText(textField.getText() + "0"));
         JButton button20 = new JButton("=");
         button20.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR
 
@@ -143,72 +142,32 @@ public class Interface{
             String expresion = textField.getText().replace(" ", "");
             expresion = this.encrypt(expresion);
             String for_me = this.postfix2(expresion);
-            //System.out.println(for_me);
+            System.out.println(for_me);
             //System.out.println(operadores(for_me)+"aaaaaaaaaaaaaaaaaaaaa");
             for_tree = this.postfix(expresion);
-            //System.out.println(for_tree);
+            System.out.println(for_tree);
+            create_tree(for_tree,true,false,1,"","");
 
-            //create_tree(for_tree,true,false,1,"","");
-
-            //Prueba(for_me,0);
-            //System.out.println(cuales_operadores(for_me));
-            System.out.println("entrooo");
-            create_tree2(for_tree);
-            //System.out.println(create_tree2(for_tree).getData());
-            System.out.println("salioooooo");
             //System.out.println(cant_operandos(for_tree));
-            //Expression_tree tree = new Expression_tree(for_tree);
+            Expression_tree tree = new Expression_tree(for_tree);
 
 
 
         }
         );
-
         button20.setFont(buttonsFont);
         //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
         buttonRow5.add(button17);
         buttonRow5.add(button18);
         buttonRow5.add(button19);
         buttonRow5.add(button20);
-
         // End of the Fifth
-        //-----------------------------------------------------------------
-
-        //-----------------------------------------------------------------
-        // Start the Sixth
-
-
-        JPanel buttonRow6 = new JPanel();
-        buttonRow6.setLayout(new GridLayout(1,4,10,10));
-        JButton button21 = new JButton("(");
-        button21.setFont(buttonsFont);
-        button21.addActionListener(e -> textField.setText(textField.getText() + "("));
-        JButton button22 = new JButton(")");
-        button22.setFont(buttonsFont);
-        button22.addActionListener(e -> textField.setText(textField.getText() + ")"));
-        JButton button23 = new JButton("0");
-        button23.setFont(buttonsFont);
-        button23.addActionListener(e -> textField.setText(textField.getText() + "0"));
-        JButton button24 = new JButton("=");
-        button24.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR
-                }
-        );
-
-        button21.setFont(buttonsFont);
-        //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
-        buttonRow6.add(button21);
-        buttonRow6.add(button22);
-        buttonRow6.add(button23);
-        buttonRow6.add(button24);
-
-
-        // End of the Sixth
         //-----------------------------------------------------------------
 
         //-----------------------------------------------------------------
         // Creation and set the parameters of the main frame
         JFrame root = new JFrame();
-        root.setLayout(new GridLayout(7, 1, 10,10));
+        root.setLayout(new GridLayout(6, 1, 10,10));
         root.setSize(410, 500);
         root.setTitle("Calculadora");
         root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,7 +183,6 @@ public class Interface{
         root.add(buttonRow3);
         root.add(buttonRow4);
         root.add(buttonRow5);
-        root.add(buttonRow6);
 
         // Show the window
         root.setVisible(true);
@@ -259,7 +217,7 @@ public class Interface{
 
     }
 
-    public String cuales_operadores(String for_me){
+    public String operadores(String for_me){
         String result="";
         String invertidos ="";
         for (int i = for_me.length()-1; i>=0;i--){
@@ -333,8 +291,6 @@ public class Interface{
         return result + "P";
     }
 
-
-
     public int cant_operandos(String for_tree){
         int result=0;
         for (int i=0;i<for_tree.length();i++ ){
@@ -346,7 +302,7 @@ public class Interface{
         }
 
 
-    public boolean simbolos(char f){ //cambiar por or
+    public boolean simbolos(char f){
         if (f == '+'){
             return true;
         }else if (f == '-'){
@@ -364,94 +320,6 @@ public class Interface{
         }else {
             return false;
         }
-    }
-
-    public void create_tree2(String postfix) {//, boolean izquierda, boolean derecha, int indice, String data_left, String data_right){ //expresión,true,false PARA LA PRIMERA VEZ
-        Stack<Node> stack = new Stack<Node>();
-
-        int indice = 0;
-        System.out.println(postfix);
-        while (indice < postfix.length()) {
-            Node nodo = new Node();
-            if (postfix.charAt(indice) != 'P' && !operador(postfix.charAt(indice))) {
-                String number = "";
-                for (int i = indice; i < postfix.length(); i++) {
-                    if (postfix.charAt(i) != 'P' && !operador(postfix.charAt(i))) {// && !operador(postfix.charAt(i))) {
-                        number += postfix.charAt(i);
-                    }
-                    if (postfix.charAt(i) == 'P') {
-                        break;
-                    }
-                    indice = i;
-                }
-                while (postfix.charAt(indice) != 'P') {
-                    indice += 1;
-                }
-                nodo.setData(number);
-                stack.push(nodo);
-                System.out.println("PUSHEDDDDDDD");
-                System.out.println(nodo.getData());
-                continue;
-            }
-
-
-            if (operador(postfix.charAt(indice))){
-                nodo.setData(postfix.charAt(indice));
-                System.out.println(nodo.getData()+" DATOS DEL NODO OPERADOR");
-                System.out.println(stack.peek().getData());
-                System.out.println(stack.peek().getData());
-                nodo.setRight(stack.pop());
-                nodo.setLeft(stack.pop());
-                stack.push(nodo);
-            }
-            indice++;
-        }
-        System.out.println(stack.peek().getData()+ "ROOOT");
-
-        Node pepe = stack.pop();
-        System.out.println("EEEEEEEEEE");
-        System.out.println(pepe.getData());
-        System.out.println(pepe.getLeft().getLeft().getData()+ "LEFTTT");
-        System.out.println(pepe.getRight().getData()+"RIIIGHT");
-        System.out.println("SE CELEBRA");
-        //return nodo;
-
-
-
-
-    }
-
-    public ArrayList Prueba(String for_me, int indice){
-        ArrayList lista = new ArrayList<>();
-        for(int i =indice; i<for_me.length();i++ ){
-            //lista.add(for_me.charAt(i));
-            lista.add(new Node(for_me.charAt(i)));
-        }
-        System.out.println(lista);
-        return lista;
-    }
-
-    public String get_number(String postfix, int indice){
-        String result ="";
-
-        for (int i = indice; i<postfix.length(); i++){
-            if (!operador(postfix.charAt(i)) && postfix.charAt(i) != 'P'){
-                result+=postfix.charAt(i);
-            }if(postfix.charAt(i)=='P'){
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    public void hay_fe(String postfix){
-        Stack<Node> stack = new Stack<Node>();
-
-        for (int i = 0; i<postfix.length();i++){
-            Node node = new Node();
-        }
-
     }
 
     public void create_tree(String postfix, boolean izquierda, boolean derecha, int indice, String data_left, String data_right){ //expresión,true,false PARA LA PRIMERA VEZ
@@ -475,10 +343,10 @@ public class Interface{
             create_tree(postfix,false,true,indice,data_left,data_right);
         }
 
-        //System.out.println("indice:" + Integer.toString(indice+1));// la idea es para work recursivo digamos para probar
-        //System.out.println(postfix.charAt(indice+1));
+        System.out.println("indice:" + Integer.toString(indice+1));// la idea es para work recursivo digamos para probar
+        System.out.println(postfix.charAt(indice+1));
         //create_tree(postfix, false,true,indice);
-        if (derecha && data_right=="") {
+        if (derecha) {
             for (int i = indice; i < postfix.length(); i++) {
                 if (postfix.charAt(i) != 'P'){// && !operador(postfix.charAt(i))) {
                     data_right += postfix.charAt(i);
@@ -486,7 +354,6 @@ public class Interface{
                 if (postfix.charAt(i) == 'P'){
                     break;
                 }
-                System.out.println(data_right+"EEEEEEEEEEEE");
             }
         }
         /*
@@ -499,28 +366,19 @@ public class Interface{
 
     }
 
+    public String get_number(String postfix, int indice){
+        String result ="";
 
+        for (int i = indice; i<postfix.length(); i++){
+            if (!operador(postfix.charAt(i)) && postfix.charAt(i) != 'P'){
+                result+=postfix.charAt(i);
+            }if(postfix.charAt(i)=='P'){
+                break;
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return result;
+    }
 
     public static void main(String[] args) {
         Interface proof = new Interface();

@@ -16,15 +16,38 @@ public class Node {
         this.type= "";
     }
 
+    public boolean operador(char f){
+        if (f == '+'){
+            return true;
+        }else if (f == '-'){
+            return true;
+        }else if (f == '*'){
+            return true;
+        }else if (f == '/'){
+            return true;
+        }else if (f == '%'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public Object getData(){
         return this.data;
     }
 
     public void setData(Object data){
         this.data = data;
+        if (operador(String.valueOf(data).charAt(0))){
+            setType(String.valueOf(String.valueOf(data).charAt(0)));
+            //this.type=String.valueOf(String.valueOf(data).charAt(0));
+        }else {
+            setType("number");
+            //this.type = "number";
+        }
     }
 
-    public Object getType(){
+    public String getType(){
         return this.type;
     }
 

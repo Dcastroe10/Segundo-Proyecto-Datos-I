@@ -140,14 +140,25 @@ public class Interface{
 
             String for_tree;
             String expresion = textField.getText().replace(" ", "");
+
             expresion = this.encrypt(expresion);
-            String for_me = this.postfix2(expresion);
-            System.out.println(for_me);
+            expresion = this.encrypt(expresion); //IMPORTANTE PARA PONERLE LAS DIVISIONES A LOS NÚMEROS
+            String for_me = this.postfix_for_me(expresion);
+
             //System.out.println(operadores(for_me)+"aaaaaaaaaaaaaaaaaaaaa");
             for_tree = this.postfix(expresion);
             System.out.println(for_tree);
             create_tree(for_tree,true,false,1,"","");
 
+            //create_tree(for_tree,true,false,1,"","");
+
+            //Prueba(for_me,0);
+            //System.out.println(cuales_operadores(for_me));
+            System.out.println("START");
+            //create_tree2(for_tree);
+            //System.out.println(create_tree2(for_tree).getData());
+            Expression_tree prueba1 = new Expression_tree(for_tree);
+            System.out.println("FINISH");
             //System.out.println(cant_operandos(for_tree));
             Expression_tree tree = new Expression_tree(for_tree);
 
@@ -164,10 +175,34 @@ public class Interface{
         // End of the Fifth
         //-----------------------------------------------------------------
 
+                // End of the Fifth
+                //-----------------------------------------------------------------
+                JPanel buttonRow6 = new JPanel();
+                buttonRow6.setLayout(new GridLayout(1,4,10,10));
+                JButton button21 = new JButton("(");
+                button21.setFont(buttonsFont);
+                button21.addActionListener(e -> textField.setText(textField.getText() + "("));
+                JButton button22 = new JButton(")");
+                button22.setFont(buttonsFont);
+                button22.addActionListener(e -> textField.setText(textField.getText() + ")"));
+                JButton button23 = new JButton("0");
+                button23.setFont(buttonsFont);
+                button23.addActionListener(e -> textField.setText(textField.getText() + "0"));
+                JButton button24 = new JButton("=");
+                button24.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR
+                        }
+                );
+
+                button21.setFont(buttonsFont);
+                //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
+                buttonRow6.add(button21);
+                buttonRow6.add(button22);
+                buttonRow6.add(button23);
+                buttonRow6.add(button24);
         //-----------------------------------------------------------------
         // Creation and set the parameters of the main frame
         JFrame root = new JFrame();
-        root.setLayout(new GridLayout(6, 1, 10,10));
+        root.setLayout(new GridLayout(7, 1, 10,10));
         root.setSize(410, 500);
         root.setTitle("Calculadora");
         root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -183,6 +218,7 @@ public class Interface{
         root.add(buttonRow3);
         root.add(buttonRow4);
         root.add(buttonRow5);
+        root.add(buttonRow6);
 
         // Show the window
         root.setVisible(true);
@@ -217,6 +253,7 @@ public class Interface{
 
     }
 
+
     public String operadores(String for_me){
         String result="";
         String invertidos ="";
@@ -234,7 +271,9 @@ public class Interface{
         return result + "KAKA" + invertidos;
     }
 
-    public String postfix2(String data){
+
+
+    public String postfix_for_me(String data){
         String expresion = data;
         Stack stack = new Stack();
         String result = "";
@@ -321,6 +360,66 @@ public class Interface{
             return false;
         }
     }
+
+
+    public void create_tree2(String postfix) {//, boolean izquierda, boolean derecha, int indice, String data_left, String data_right){ //expresión,true,false PARA LA PRIMERA VEZ
+        Stack<Node> stack = new Stack<Node>();
+
+        int indice = 0;
+        System.out.println(postfix);
+        while (indice < postfix.length()) {
+            Node nodo = new Node();
+            if (postfix.charAt(indice) != 'P' && !operador(postfix.charAt(indice))) {
+                String number = "";
+                for (int i = indice; i < postfix.length(); i++) {
+                    if (postfix.charAt(i) != 'P' && !operador(postfix.charAt(i))) {// && !operador(postfix.charAt(i))) {
+                        number += postfix.charAt(i);
+                    }
+                    if (postfix.charAt(i) == 'P') {
+                        break;
+                    }
+                    indice = i;
+                }
+                while (postfix.charAt(indice) != 'P') {
+                    indice += 1;
+                }
+                nodo.setData(number);
+                stack.push(nodo);
+                System.out.println("PUSHEDDDDDDD");
+                System.out.println(nodo.getData());
+                continue;
+            }
+
+
+            if (operador(postfix.charAt(indice))){
+                nodo.setData(postfix.charAt(indice));
+                System.out.println(nodo.getData()+" DATOS DEL NODO OPERADOR");
+                System.out.println(stack.peek().getData());
+                System.out.println(stack.peek().getData());
+                nodo.setRight(stack.pop());
+                nodo.setLeft(stack.pop());
+                stack.push(nodo);
+            }
+            indice++;
+        }
+        System.out.println(stack.peek().getData()+ "ROOOT");
+
+        Node pepe = stack.pop();
+        System.out.println("EEEEEEEEEE");
+        System.out.println(pepe.getData());
+        System.out.println(pepe.getLeft().getLeft().getData()+ "LEFTTT");
+        System.out.println(pepe.getLeft().getRight().getData()+ "LEFTTT");
+        System.out.println(pepe.getRight().getData()+"RIIIGHT");
+        System.out.println("SE CELEBRA");
+        //return nodo;
+
+
+
+
+    }
+
+
+
 
     public void create_tree(String postfix, boolean izquierda, boolean derecha, int indice, String data_left, String data_right){ //expresión,true,false PARA LA PRIMERA VEZ
         Node left;

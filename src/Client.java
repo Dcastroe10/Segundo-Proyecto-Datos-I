@@ -387,7 +387,7 @@ public class Client {
         button24.addActionListener(e -> {
             String expresion = textField.getText().replace(" ", "");
             try {
-                expresion+=")";
+                //expresion+=")";
                 sendMessage(expresion);
             } catch (IOException ex) {
                 ex.printStackTrace();

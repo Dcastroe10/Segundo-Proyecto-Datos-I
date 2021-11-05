@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -13,6 +14,10 @@ public class ClientManager extends Thread{
     private DataInputStream input;
     private DataOutputStream output;
     public int identificator;
+    private final Stack1 expresions = new Stack1();
+    private final Stack1 operations = new Stack1();
+
+
 
     /**
      * Método constructor de la clase, se encarga de definir los atributos de la clase.
@@ -63,16 +68,16 @@ public class ClientManager extends Thread{
                     output.writeUTF(record);
                 } else{
                     try {
-                        String expresion = encrypt(msg);
-                        String treenotation = postfix(expresion);
-                        System.out.println(expresion);
-                        System.out.println(treenotation + " This is the original postfix");
-                        Expression_tree expressionTree = new Expression_tree(treenotation);
+                        List prueba1 = normalConvertor(msg);
+                        List prueba2 = polishNotation(prueba1);
+                        String for_tree = polish(prueba2);
+                        Expression_tree expressionTree = new Expression_tree(for_tree);
                         Node root = expressionTree.get_root();
                         String result = String.valueOf(expressionTree.solve(root));
                         output.writeUTF(result);
                         CSVManager manager = new CSVManager();
                         manager.writeFiles(identificator, msg.substring(0, msg.length()-1), result);
+
                     } catch (Exception e){
                         output.writeUTF("Syntax Error");
                     }
@@ -83,34 +88,6 @@ public class ClientManager extends Thread{
         } catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Este método cambia de notación infija a notación postfija
-     * @param data
-     * @return Devuelve la expresión ya en notación postfija
-     */
-    public String postfix(String data){
-        Stack stack = new Stack();
-        String result = "";
-        for (int i = 0; i < data.length()-1; i++) {
-            char character = data.charAt(i);
-            if (character=='P' && data.charAt(i+1)!='(' && !operador(data.charAt(i+1))){
-                result+="P";
-            }else if (!operador(character) && character!='(' && character != ')' && character!='P') {
-                result += character;
-
-            } else if (operador(character)) {
-                stack.push(character);
-
-            } else if (character ==')') {;
-                while (!stack.empty()){
-                    result +=stack.pop();
-                }
-
-            }
-        }
-        return result += "P"; // se agrega la última P no sé si es necesaria lol
     }
 
 
@@ -133,24 +110,6 @@ public class ClientManager extends Thread{
         }else{
             return false;
         }
-    }
-
-    /**
-     * Identifica cuando hay un cambio entre números y símbolos para luego poder diferenciarlos en la notación postfija
-     * @param to_encrypt
-     * @return el string "encriptado"
-     */
-    public String encrypt(String to_encrypt) {
-        String result = "";
-        for (int i = 0; i < to_encrypt.length(); i++) {
-            if (!simbolos(to_encrypt.charAt(i))) {
-                result += String.valueOf(to_encrypt.charAt(i));
-            } else if (simbolos(to_encrypt.charAt(i))) {
-                result += "P" + to_encrypt.charAt(i) + "P";
-            }
-        }
-        //System.out.println(result);
-        return result + "P";
     }
 
     /**
@@ -177,4 +136,112 @@ public class ClientManager extends Thread{
             return false;
         }
     }
+
+    /**
+     * Convierte los caracteres de un String a una lista
+     * @param expresion
+     * @return devuelve la lista
+     */
+
+
+    public List<String> normalConvertor(String expresion) {
+        List<String> list = new ArrayList<String>();
+        int ind = 0;
+        String element;
+        char symbol;
+        do {
+            if ((symbol = expresion.charAt(ind)) < 48 || (symbol = expresion.charAt(ind)) > 57) {
+                list.add("" + symbol);
+                ind++;
+            } else {
+                element = "";
+                while (ind < expresion.length() && (symbol = expresion.charAt(ind)) >= 48 && (symbol = expresion.charAt(ind)) <= 57) {
+                    element += symbol;
+                    ind++;
+                }
+                list.add(element);
+            }
+
+        } while (ind < expresion.length());
+        System.out.println(list);
+        return list;
+    }
+
+    /**
+     * Convierte una lista en otra lista con la expresión polaca inversa (postfija)
+     * @param expresion
+     * @return list con la expresión postfija
+     */
+
+
+    public List<String> polishNotation(List<String> expresion) {
+        List<String> result = new ArrayList<String>();
+        for (String str : expresion) {
+            if (str.matches("\\d+")) {
+                result.add(str);
+            } else if (str.equals("(")) {
+                expresions.push(str);
+            } else if (str.equals(")")) {
+
+                while (!expresions.topper.equals("(")) {
+                    result.add(expresions.pop());
+                }
+                expresions.pop();
+            } else {
+                while (expresions.getSize() != 0 && getOrder(expresions.topper) >= getOrder(str)) {
+                    result.add(expresions.pop());
+                }
+                expresions.push(str);
+            }
+        }
+        while (expresions.getSize() != 0) {
+            result.add(expresions.pop());
+        }
+        System.out.println(result);
+        return result;
+    }
+
+    /**
+     * Se utiliza para decidir cual es el orden de prioridad de los operadores
+     * @param str
+     * @return int
+     */
+
+    public int getOrder(String str) {
+        if (str.equals("+")) {
+            return 1;
+        } else if (str.equals("-")) {
+            return 1;
+        } else if (str.equals("x")) {
+            return 2;
+        } else if (str.equals("/")) {
+            return 2;
+        } else if (str.equals("%")) {
+            return 2;
+        }
+        return 0;
+    }
+
+    /**
+     *
+     * @param list
+     * @return String con la notación polaca necesaria para la creación del árbol
+     */
+
+    public String polish (List list){
+        String result = "";
+        for (int i = 0; i<list.size();i++){
+            result+= "P" + list.get(i);
+        }
+        return result+"P";
+    }
+
+
+
+
+
+
+
+
+
 }

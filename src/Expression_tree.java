@@ -52,7 +52,7 @@ public class Expression_tree {
 
     /**
      * Evalúa el árbol de expresiónn y nos devuelve el resultado
-     * @param root
+     * @param root corresponde a la raíz del árbol de expresión creado
      * @return El resultado de la evaluación de la expresión del árbol
      */
 
@@ -94,7 +94,7 @@ public class Expression_tree {
 
     /**
      *Nos indica si un caracter es un operador o no
-     * @param f un caracter para
+     * @param f un caracter de la expresión postfija que se está creando en el árbol
      * @return boolean
      */
     public boolean operador(char f){
@@ -115,7 +115,7 @@ public class Expression_tree {
 
     /**
      * Se obtiene la raíz del árbol de expresión creado
-     * @return
+     * @return la raíz del árbol de expresión creado en el método constructor
      */
     public Node get_root(){
         return this.root;

@@ -91,9 +91,9 @@ public class ClientManager extends Thread{
     }
 
     /**
-     * Convierte los caracteres de un String a una lista
-     * @param expresion
-     * @return devuelve la lista
+     * Convierte la expresión matemática y la divide por operandos o operadores en el mismo orden pero en una lista
+     * @param expresion Es el String que ingresa el usuario, la expresión matemática
+     * @return devuelve la lista con la expresión matemática
      */
 
 
@@ -122,7 +122,7 @@ public class ClientManager extends Thread{
 
     /**
      * Convierte una lista en otra lista con la expresión polaca inversa (postfija)
-     * @param expresion
+     * @param expresion Es una lista con la expresión ingresada en la calculadora separando los datos
      * @return list con la expresión postfija
      */
 
@@ -156,8 +156,8 @@ public class ClientManager extends Thread{
 
     /**
      * Se utiliza para decidir cual es el orden de prioridad de los operadores
-     * @param str
-     * @return int
+     * @param str Será un elemento de la lista que se está convirtiendo a postfija en polishNotation
+     * @return int el cual es el valor de prioridad del operador
      */
 
     public int getOrder(String str) {
@@ -176,8 +176,8 @@ public class ClientManager extends Thread{
     }
 
     /**
-     *
-     * @param list
+     *Convierte una lista en notación postfija al String con las divisiones necesarias para la creación del árbol de expresión
+     * @param list es una lista que contiene la expresión en notación postfija
      * @return String con la notación polaca necesaria para la creación del árbol
      */
 

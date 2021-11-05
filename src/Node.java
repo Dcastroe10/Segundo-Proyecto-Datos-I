@@ -5,7 +5,7 @@ public class Node {
 
     /**
      * Crea un nodo con los datos ingresados, se utiliza para la creación del árbol de expresión
-     * @param data
+     * @param data Información que el nodo va a guardar
      */
     public Node(Object data){
         this.data = data;
@@ -20,7 +20,7 @@ public class Node {
 
     /**
      *Obtiene el dato almacenado en el nodo
-     * @return
+     * @return el dato almacenado en el nodo
      */
     public Object getData(){
         return this.data;
@@ -28,7 +28,7 @@ public class Node {
 
     /**
      * Cambia el tipo dato del nodo
-     * @param data
+     * @param data Dato que queremos que el nodo guarde
      */
     public void setData(Object data){
         this.data = data;
@@ -36,7 +36,7 @@ public class Node {
 
     /**
      * Obtiene el hijo izquierdo del nodo
-     * @return
+     * @return el hijo por la izquierda el cual es un nodo
      */
     public Node getLeft(){
         return this.left;
@@ -44,7 +44,7 @@ public class Node {
 
     /**
      * Se le asigna el hijo izquierdo al nodo
-     * @param node
+     * @param node nodo que queremos asignar como hijo por la izquierda al nodo actual
      */
     public void setLeft(Node node){
         this.left = node;
@@ -52,7 +52,7 @@ public class Node {
 
     /**
      * Obtiene el hijo derecho del nodo
-     * @return
+     * @return el hijo por la derecha del nodo actual
      */
     public Node getRight(){
         return this.right;
@@ -60,7 +60,7 @@ public class Node {
 
     /**
      * Se asigna el hijo de la derecha al nodo
-     * @param node
+     * @param node el nodo que queremos vincular como hijo por la derecha del nodo actual
      */
     public void setRight(Node node){
         this.right = node;

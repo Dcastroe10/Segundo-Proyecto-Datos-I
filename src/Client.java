@@ -373,6 +373,7 @@ public class Client {
         button24.addActionListener(e -> {
             String expresion = textField.getText().replace(" ", "");
             try {
+                expresion+=")";
                 sendMessage(expresion);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -412,4 +413,7 @@ public class Client {
         // End of the main frame
         //------------------------------------------------------------------
     }
+
+
+
 }

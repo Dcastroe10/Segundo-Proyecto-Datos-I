@@ -23,9 +23,12 @@ public class Expression_tree {
                     if (postfix.charAt(i) == 'P') {
                         break;
                     }
+                    if (operador(postfix.charAt(i))){
+                        break;
+                    }
                     indice = i;
                 }
-                while (postfix.charAt(indice) != 'P') {
+                while (postfix.charAt(indice) != 'P'){// || operador(postfix.charAt(indice))) {
                     indice += 1;
                 }
                 nodo.setData(number);

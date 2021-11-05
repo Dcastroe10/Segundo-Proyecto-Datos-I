@@ -63,6 +63,8 @@ public class ClientManager extends Thread{
                     try {
                         String expresion = encrypt(msg);
                         String treenotation = postfix(expresion);
+                        System.out.println(expresion);
+                        System.out.println(treenotation + " This is the original postfix");
                         Expression_tree expressionTree = new Expression_tree(treenotation);
                         Node root = expressionTree.get_root();
                         String result = String.valueOf(expressionTree.solve(root));
@@ -106,6 +108,7 @@ public class ClientManager extends Thread{
         }
         return result += "P"; // se agrega la última P no sé si es necesaria lol
     }
+
 
     /**
      *Nos indica si un caracter es un operador o no

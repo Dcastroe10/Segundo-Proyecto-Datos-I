@@ -3,6 +3,7 @@ import java.util.Stack;
 
 
 public class Expression_tree {
+    Node root;
 
     /**
      * Crea un árbol de expresión del cual vamos a obtener la raíz para recorrerlo
@@ -41,8 +42,8 @@ public class Expression_tree {
             }
             indice++;
         }
-        Node root = stack.pop();
-        System.out.println("El resultado es: " + solve(root));
+        root = stack.pop();
+        //System.out.println("El resultado es: " + solve(root));
     }
 
 
@@ -104,5 +105,13 @@ public class Expression_tree {
         }else{
             return false;
         }
+    }
+
+    /**
+     * Se obtiene la raíz del árbol de expresión creado
+     * @return
+     */
+    public Node get_root(){
+        return this.root;
     }
 }

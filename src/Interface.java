@@ -6,6 +6,7 @@ import java.util.Stack;
 public class Interface{
         // Constructor method of the class. Here the interface of the calculator is created
     public Interface(){
+        boolean showing_result = false;
 
         // Fonts that were are going to use in the components
         Font titlesFont = new Font("Cambria", Font.BOLD, 30);
@@ -135,13 +136,15 @@ public class Interface{
         button19.setFont(buttonsFont);
         button19.addActionListener(e -> textField.setText(textField.getText() + "0"));
         JButton button20 = new JButton("=");
-        button20.addActionListener(e ->{        //AQUÍ ES EL BOTÓN IGUAL PARA CREAR EL ARBOL Y LUEGO CALCULAR!!!!!!!!!!
+        button20.addActionListener(e ->{        //CREAR EL ARBOL Y LUEGO CALCULAR EL RESULTADO
             String expresion = textField.getText().replace(" ", "");
             expresion = this.encrypt(expresion);
-            String for_me = this.postfix_for_me(expresion); //for_me == notación postfija sin divisiones
-            //System.out.println(expresion);
+            //String for_me = this.postfix_for_me(expresion); //for_me == notación postfija sin divisiones
             String for_tree = this.postfix(expresion);
-            Expression_tree prueba1 = new Expression_tree(for_tree);
+            Expression_tree expression_tree = new Expression_tree(for_tree);
+            Node root = expression_tree.get_root();
+            System.out.println("La respuesta es: "+expression_tree.solve(root));
+            textField.setText(String.valueOf(expression_tree.solve(root)));
         }
         );
         button20.setFont(buttonsFont);

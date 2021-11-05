@@ -90,53 +90,6 @@ public class ClientManager extends Thread{
         }
     }
 
-
-    /**
-     *Nos indica si un caracter es un operador o no
-     * @param f un caracter para
-     * @return boolean
-     */
-    public boolean operador(char f){
-        if (f == '+'){
-            return true;
-        }else if (f == '-'){
-            return true;
-        }else if (f == 'x'){
-            return true;
-        }else if (f == '/'){
-            return true;
-        }else if (f == '%'){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    /**
-     * Identifica si un caracter es distinto de un número
-     * @param f
-     * @return true si no es un número y false si lo es
-     */
-    public boolean simbolos(char f){
-        if (f == '+'){
-            return true;
-        }else if (f == '-'){
-            return true;
-        }else if (f == 'x'){
-            return true;
-        }else if (f == '/'){
-            return true;
-        }else if (f == '%'){
-            return true;
-        }else if (f == '('){
-            return true;
-        }else if (f == ')') {
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     /**
      * Convierte los caracteres de un String a una lista
      * @param expresion

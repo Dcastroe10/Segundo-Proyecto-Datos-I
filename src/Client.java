@@ -15,9 +15,11 @@ public class Client {
     private DataOutputStream output;
     public JFrame root;
     public JLabel textField;
+    public JFrame record;
+    public String identificator;
     boolean beggin = true;
     boolean showing_result = false;
-    boolean record = false;
+    boolean isrecord = false;
 
     /**
      * Función que se encarga de crear el socket con el cliente así como los canales de comunicación con el mismo
@@ -36,13 +38,17 @@ public class Client {
                 break;
             } else if (beggin){
                 System.out.println("Bienvenido a la Calculadora Cliente #" + msg);
+                identificator = msg;
                 String nameFrame = "Calculadora - Cliente #" + msg;
                 createInterface(nameFrame); // se crea la interfaz de la calculadora
                 beggin = false;
-            } else if (!record) {
+            } else if (!isrecord) {
                 showing_result = true;
                 textField.setText(msg);
-                System.out.println("llegue aqui uuu = " + msg);
+            } else {
+                String nameFrame = "Historial - Cliente #" + identificator;
+                createRecord(msg, nameFrame);
+                isrecord = false;
             }
         }
         closeClient();
@@ -109,7 +115,14 @@ public class Client {
         buttonRow1.setLayout(new GridLayout(1,4,10,10));
         JButton button1 = new JButton("HIS");
         button1.setFont(buttonsFont);
-        //button1.addActionListener(e -> textField.setText(textField.getText() + "1"));
+        button1.addActionListener(e -> {
+            try {
+                sendMessage("HIS");
+                isrecord = true;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         JButton button2 = new JButton("DEL");
         button2.setFont(buttonsFont);
         button2.addActionListener(e -> textField.setText(textField.getText().substring(0, textField.getText().length()-1)));
@@ -358,14 +371,15 @@ public class Client {
             this.showing_result = false;
         });
 
-        JButton button23 = new JButton("XX");
+        JButton button23 = new JButton("EXIT");
         button23.setFont(buttonsFont);
         button23.addActionListener(e -> {
-            if (showing_result){
-                textField.setText("");
+            try {
+                sendMessage("EXIT");
+                root.setVisible(false);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-            textField.setText(textField.getText() + "XX");
-            this.showing_result = false;
         });
 
         JButton button24 = new JButton("=");
@@ -414,6 +428,75 @@ public class Client {
         //------------------------------------------------------------------
     }
 
+    public void createRecord(String recordClient, String nameFrame) {
+        Font titlesFont = new Font("Cambria", Font.BOLD, 25);
+        Font recordFont = new Font("Cambria", Font.BOLD, 20);
+        Border titleBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Black Border of the Label
+        Border textBorder = BorderFactory.createLineBorder(Color.BLACK, 1); // Black Border of the Label
 
+        String[] parts = recordClient.split(",");
+        System.out.println(parts);
+        record = new JFrame();
+        record.setLayout(new GridLayout(parts.length / 5 + 1, 5, 5, 5));
+        record.setSize(1000, (parts.length / 5 * 50) + 50);
+        record.setTitle(nameFrame);
+        record.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
+        JLabel client = new JLabel("Cliente");
+        client.setFont(titlesFont);
+        client.setBackground(Color.red);
+        client.setBorder(titleBorder);
+        client.setOpaque(true);
+        client.setVerticalAlignment(JLabel.CENTER);
+        client.setHorizontalAlignment(JLabel.CENTER);
+        record.add(client);
+
+        JLabel operation = new JLabel("Operación");
+        operation.setFont(titlesFont);
+        operation.setBackground(Color.orange);
+        operation.setBorder(titleBorder);
+        operation.setOpaque(true);
+        operation.setVerticalAlignment(JLabel.CENTER);
+        operation.setHorizontalAlignment(JLabel.CENTER);
+        record.add(operation);
+
+        JLabel result = new JLabel("Resultado");
+        result.setFont(titlesFont);
+        result.setBackground(Color.green);
+        result.setBorder(titleBorder);
+        result.setOpaque(true);
+        result.setVerticalAlignment(JLabel.CENTER);
+        result.setHorizontalAlignment(JLabel.CENTER);
+        record.add(result);
+
+        JLabel date = new JLabel("Fecha");
+        date.setFont(titlesFont);
+        date.setBackground(Color.blue);
+        date.setBorder(titleBorder);
+        date.setOpaque(true);
+        date.setVerticalAlignment(JLabel.CENTER);
+        date.setHorizontalAlignment(JLabel.CENTER);
+        record.add(date);
+
+        JLabel time = new JLabel("Hora");
+        time.setFont(titlesFont);
+        time.setBackground(Color.magenta);
+        time.setBorder(titleBorder);
+        time.setOpaque(true);
+        time.setVerticalAlignment(JLabel.CENTER);
+        time.setHorizontalAlignment(JLabel.CENTER);
+        record.add(time);
+
+        JLabel[] components = new JLabel[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            components[i] = new JLabel();
+            components[i].setText(parts[i]);
+            components[i].setFont(recordFont);
+            components[i].setBorder(textBorder);
+            components[i].setVerticalAlignment(JLabel.CENTER);
+            components[i].setHorizontalAlignment(JLabel.CENTER);
+            record.add(components[i]);
+        }
+        record.setVisible(true);
+    }
 }

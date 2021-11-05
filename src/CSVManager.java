@@ -38,7 +38,7 @@ public class CSVManager {
             return record;
         } catch (Exception e) {
             e.printStackTrace();
-            return record;
+            return "Skere";
         }
     }
 

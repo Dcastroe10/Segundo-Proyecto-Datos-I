@@ -57,8 +57,10 @@ public class ClientManager extends Thread{
                 System.out.println(msg);
                 if (msg.equalsIgnoreCase("EXIT")){
                     break;
-                } else if (msg == "HIS"){
-                    output.writeUTF("El historial esta en desarrollo");
+                } else if (msg.equalsIgnoreCase("HIS")){
+                    CSVManager manager = new CSVManager();
+                    String record = manager.readFiles(identificator);
+                    output.writeUTF(record);
                 } else{
                     try {
                         String expresion = encrypt(msg);
@@ -69,7 +71,9 @@ public class ClientManager extends Thread{
                         Node root = expressionTree.get_root();
                         String result = String.valueOf(expressionTree.solve(root));
                         output.writeUTF(result);
-                    } catch (ArithmeticException e){
+                        CSVManager manager = new CSVManager();
+                        manager.writeFiles(identificator, msg.substring(0, msg.length()-1), result);
+                    } catch (Exception e){
                         output.writeUTF("Syntax Error");
                     }
                 }

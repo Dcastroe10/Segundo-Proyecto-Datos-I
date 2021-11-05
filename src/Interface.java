@@ -4,9 +4,9 @@ import java.awt.*;
 import java.util.Stack;
 
 public class Interface{
+    boolean showing_result = false;
         // Constructor method of the class. Here the interface of the calculator is created
     public Interface(){
-        boolean showing_result = false;
 
         // Fonts that were are going to use in the components
         Font titlesFont = new Font("Cambria", Font.BOLD, 30);
@@ -45,7 +45,14 @@ public class Interface{
         button3.addActionListener(e -> textField.setText(""));
         JButton button4 = new JButton("÷");
         button4.setFont(buttonsFont);
-        button4.addActionListener(e -> textField.setText(textField.getText() + " / "));
+        button4.addActionListener(e -> {
+            if (showing_result){
+            textField.setText("");
+        }
+        textField.setText(textField.getText() + "÷");
+        this.showing_result = false;
+    });
+
         buttonRow1.add(button1);
         buttonRow1.add(button2);
         buttonRow1.add(button3);
@@ -59,16 +66,43 @@ public class Interface{
         buttonRow2.setLayout(new GridLayout(1,4,10,10));
         JButton button5 = new JButton("7");
         button5.setFont(buttonsFont);
-        button5.addActionListener(e -> textField.setText(textField.getText() + "7"));
+        button5.addActionListener(e ->{
+            if (showing_result){
+            textField.setText("");
+        }
+            textField.setText(textField.getText() + "7");
+            this.showing_result = false;
+        });
+
         JButton button6 = new JButton("8");
         button6.setFont(buttonsFont);
-        button6.addActionListener(e -> textField.setText(textField.getText() + "8"));
+        button6.addActionListener(e ->{
+            if (showing_result){
+            textField.setText("");
+        }
+            textField.setText(textField.getText() + "8");
+            this.showing_result = false;
+        });
+
         JButton button7 = new JButton("9");
         button7.setFont(buttonsFont);
-        button7.addActionListener(e -> textField.setText(textField.getText() + "9"));
+        button7.addActionListener(e -> {
+            if (showing_result){
+            textField.setText("");
+        }
+            textField.setText(textField.getText() + "9");
+            this.showing_result = false;
+        });
+
         JButton button8 = new JButton("x");
         button8.setFont(buttonsFont);
-        button8.addActionListener(e -> textField.setText(textField.getText() + " * "));
+        button8.addActionListener(e ->{
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "x");
+            this.showing_result = false;
+        });
         buttonRow2.add(button5);
         buttonRow2.add(button6);
         buttonRow2.add(button7);
@@ -82,16 +116,43 @@ public class Interface{
         buttonRow3.setLayout(new GridLayout(1,4,10,10));
         JButton button9 = new JButton("4");
         button9.setFont(buttonsFont);
-        button9.addActionListener(e -> textField.setText(textField.getText() + "4"));
+        button9.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "4");
+            this.showing_result = false;
+        });
+
         JButton button10 = new JButton("5");
         button10.setFont(buttonsFont);
-        button10.addActionListener(e -> textField.setText(textField.getText() + "5"));
+        button10.addActionListener(e ->{
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "5");
+            this.showing_result = false;
+        });
+
         JButton button11 = new JButton("6");
         button11.setFont(buttonsFont);
-        button11.addActionListener(e -> textField.setText(textField.getText() + "6"));
+        button11.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "6");
+            this.showing_result = false;
+        });
+
         JButton button12 = new JButton("-");
         button12.setFont(buttonsFont);
-        button12.addActionListener(e -> textField.setText(textField.getText() + " - "));
+        button12.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "-");
+            this.showing_result = false;
+        });
         buttonRow3.add(button9);
         buttonRow3.add(button10);
         buttonRow3.add(button11);
@@ -105,16 +166,44 @@ public class Interface{
         buttonRow4.setLayout(new GridLayout(1,4,10,10));
         JButton button13 = new JButton("1");
         button13.setFont(buttonsFont);
-        button13.addActionListener(e -> textField.setText(textField.getText() + "1"));
+        button13.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "1");
+            this.showing_result = false;
+        });
+
         JButton button14 = new JButton("2");
         button14.setFont(buttonsFont);
-        button14.addActionListener(e -> textField.setText(textField.getText() + "2"));
+        button14.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "2");
+            this.showing_result = false;
+        });
+
         JButton button15 = new JButton("3");
         button15.setFont(buttonsFont);
-        button15.addActionListener(e -> textField.setText(textField.getText() + "3"));
+        button15.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "3");
+            this.showing_result = false;
+        });
+
         JButton button16 = new JButton("+");
         button16.setFont(buttonsFont);
-        button16.addActionListener(e -> textField.setText(textField.getText() + " + "));
+        button16.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "+");
+            this.showing_result = false;
+        });
+
         buttonRow4.add(button13);
         buttonRow4.add(button14);
         buttonRow4.add(button15);
@@ -126,27 +215,43 @@ public class Interface{
         // Sixth Panel that contents the fifth and last row of buttons
         JPanel buttonRow5 = new JPanel();
         buttonRow5.setLayout(new GridLayout(1,4,10,10));
-        JButton button17 = new JButton("(");
+        JButton button17 = new JButton("0");
         button17.setFont(buttonsFont);
-        button17.addActionListener(e -> textField.setText(textField.getText() + "("));
-        JButton button18 = new JButton(")");
+        button17.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "0");
+            this.showing_result = false;
+        });
+
+        JButton button18 = new JButton("00");
         button18.setFont(buttonsFont);
-        button18.addActionListener(e -> textField.setText(textField.getText() + ")"));
-        JButton button19 = new JButton("0");
+        button18.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "00");
+            this.showing_result = false;
+        });
+
+        JButton button19 = new JButton("000");
         button19.setFont(buttonsFont);
-        button19.addActionListener(e -> textField.setText(textField.getText() + "0"));
-        JButton button20 = new JButton("=");
-        button20.addActionListener(e ->{        //CREAR EL ARBOL Y LUEGO CALCULAR EL RESULTADO
-            String expresion = textField.getText().replace(" ", "");
-            expresion = this.encrypt(expresion);
-            //String for_me = this.postfix_for_me(expresion); //for_me == notación postfija sin divisiones
-            String for_tree = this.postfix(expresion);
-            Expression_tree expression_tree = new Expression_tree(for_tree);
-            Node root = expression_tree.get_root();
-            System.out.println("La respuesta es: "+expression_tree.solve(root));
-            textField.setText(String.valueOf(expression_tree.solve(root)));
+        button19.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "000");
+            this.showing_result = false;
+        });
+
+        JButton button20 = new JButton("%");
+        button20.addActionListener(e ->{   if (showing_result){
+            textField.setText("");
         }
-        );
+            textField.setText(textField.getText() + "%");
+            this.showing_result = false;
+        });
         button20.setFont(buttonsFont);
         //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
         buttonRow5.add(button17);
@@ -162,15 +267,50 @@ public class Interface{
         buttonRow6.setLayout(new GridLayout(1,4,10,10));
         JButton button21 = new JButton("(");
         button21.setFont(buttonsFont);
-        button21.addActionListener(e -> textField.setText(textField.getText() + "("));
+        button21.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "(");
+            this.showing_result = false;
+        });
+
         JButton button22 = new JButton(")");
         button22.setFont(buttonsFont);
-        button22.addActionListener(e -> textField.setText(textField.getText() + ")"));
-        JButton button23 = new JButton("0");
+        button22.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + ")");
+            this.showing_result = false;
+        });
+
+        JButton button23 = new JButton("XX");
         button23.setFont(buttonsFont);
-        button23.addActionListener(e -> textField.setText(textField.getText() + "0"));
-        JButton button24 = new JButton("%");
-        button24.addActionListener(e -> textField.setText(textField.getText() + "%"));
+        button23.addActionListener(e -> {
+            if (showing_result){
+                textField.setText("");
+            }
+            textField.setText(textField.getText() + "XX");
+            this.showing_result = false;
+        });
+
+        JButton button24 = new JButton("=");
+        button24.setFont(buttonsFont);
+        button24.addActionListener(e -> {
+                    //CREAR EL ARBOL Y LUEGO CALCULAR EL RESULTADO
+                    String expresion = textField.getText().replace(" ", "");
+                    expresion = this.encrypt(expresion);
+                    //String for_me = this.postfix_for_me(expresion); //for_me == notación postfija sin divisiones
+                    String for_tree = this.postfix(expresion);
+                    Expression_tree expression_tree = new Expression_tree(for_tree);
+                    Node root = expression_tree.get_root();
+                    System.out.println("La respuesta es: "+expression_tree.solve(root));
+                    textField.setText(String.valueOf(expression_tree.solve(root)));
+                    this.showing_result = true;
+                }
+        );
+
 
                 button21.setFont(buttonsFont);
                 //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
@@ -274,7 +414,7 @@ public class Interface{
             return true;
         }else if (f == '-'){
             return true;
-        }else if (f == '*'){
+        }else if (f == 'x'){
             return true;
         }else if (f == '/'){
             return true;
@@ -313,7 +453,7 @@ public class Interface{
             return true;
         }else if (f == '-'){
             return true;
-        }else if (f == '*'){
+        }else if (f == 'x'){
             return true;
         }else if (f == '/'){
             return true;

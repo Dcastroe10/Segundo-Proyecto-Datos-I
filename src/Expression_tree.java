@@ -73,12 +73,12 @@ public class Expression_tree {
             return operando_left - operando_right;
 
         }
-        if (tipo.equals("*")){
+        if (tipo.equals("x")){
             System.out.println("Multiplicación");
             return operando_left * operando_right;
 
         }
-        if (tipo.equals("/")){
+        if (tipo.equals("÷")){
             System.out.println("División");
             return operando_left / operando_right;
         }
@@ -96,7 +96,7 @@ public class Expression_tree {
             return true;
         }else if (f == '-'){
             return true;
-        }else if (f == '*'){
+        }else if (f == 'x'){
             return true;
         }else if (f == '/'){
             return true;

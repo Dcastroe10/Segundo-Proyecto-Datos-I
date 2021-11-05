@@ -81,7 +81,7 @@ public class Expression_tree {
             return operando_left * operando_right;
 
         }
-        if (tipo.equals("÷")){
+        if (tipo.equals("/")){
             System.out.println("División");
             return operando_left / operando_right;
         }

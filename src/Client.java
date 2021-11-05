@@ -129,13 +129,13 @@ public class Client {
         JButton button3 = new JButton("AC");
         button3.setFont(buttonsFont);
         button3.addActionListener(e -> textField.setText(""));
-        JButton button4 = new JButton("÷");
+        JButton button4 = new JButton("/");
         button4.setFont(buttonsFont);
         button4.addActionListener(e -> {
             if (showing_result){
                 textField.setText("");
             }
-            textField.setText(textField.getText() + "÷");
+            textField.setText(textField.getText() + "/");
             this.showing_result = false;
         });
 

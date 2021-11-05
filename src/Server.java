@@ -52,9 +52,9 @@ public class Server {
      */
     public static void main(String[] args) {
         Server server = new Server();
-        try{
+        try {
             server.startServer(5000);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

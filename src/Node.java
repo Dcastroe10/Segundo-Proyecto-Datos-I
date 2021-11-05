@@ -2,71 +2,66 @@ public class Node {
     public Object data;
     public Node left;
     public Node right;
-    public String type;
 
-    public Node(Object data){ //add type, si es operando o numero
+    /**
+     * Crea un nodo con los datos ingresados, se utiliza para la creación del árbol de expresión
+     * @param data
+     */
+    public Node(Object data){
         this.data = data;
         this.right = null;
         this.left = null;
-        this.type = "";
     }
+
     public Node(){
         this.right = null;
         this.left = null;
-        this.type= "";
     }
 
-    public boolean operador(char f){
-        if (f == '+'){
-            return true;
-        }else if (f == '-'){
-            return true;
-        }else if (f == '*'){
-            return true;
-        }else if (f == '/'){
-            return true;
-        }else if (f == '%'){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
+    /**
+     *Obtiene el dato almacenado en el nodo
+     * @return
+     */
     public Object getData(){
         return this.data;
     }
 
+    /**
+     * Cambia el tipo dato del nodo
+     * @param data
+     */
     public void setData(Object data){
         this.data = data;
-        if (operador(String.valueOf(data).charAt(0))){
-            setType(String.valueOf(String.valueOf(data).charAt(0)));
-            //this.type=String.valueOf(String.valueOf(data).charAt(0));
-        }else {
-            setType("number");
-            //this.type = "number";
-        }
     }
 
-    public String getType(){
-        return this.type;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
+    /**
+     * Obtiene el hijo izquierdo del nodo
+     * @return
+     */
     public Node getLeft(){
         return this.left;
     }
 
+    /**
+     * Se le asigna el hijo izquierdo al nodo
+     * @param node
+     */
     public void setLeft(Node node){
         this.left = node;
     }
 
+    /**
+     * Obtiene el hijo derecho del nodo
+     * @return
+     */
     public Node getRight(){
         return this.right;
     }
 
+    /**
+     * Se asigna el hijo de la derecha al nodo
+     * @param node
+     */
     public void setRight(Node node){
         this.right = node;
     }

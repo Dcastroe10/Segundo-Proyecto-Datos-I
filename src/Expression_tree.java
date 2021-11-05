@@ -82,8 +82,11 @@ public class Expression_tree {
             System.out.println("División");
             return operando_left / operando_right;
         }
+        if (tipo.equals("%")){
+            System.out.println("Residuo");
+            return operando_left % operando_right;
+        }
         return operando_left % operando_right;
-
     }
 
     /**

@@ -3,13 +3,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Clase encargada de encargarse de la comunicación e interpretación de cada cliente en específico.
  */
 public class ClientManager extends Thread{
     private final Socket clientSocket;
-    private final ArrayList<ClientManager> clientsList;
     private DataInputStream input;
     private DataOutputStream output;
     public int identificator;
@@ -22,7 +22,6 @@ public class ClientManager extends Thread{
      */
     public ClientManager(Socket socket, ArrayList<ClientManager> clientsList, int identificator) {
         this.clientSocket = socket;
-        this.clientsList = clientsList;
         this.identificator = identificator;
     }
 
@@ -33,6 +32,7 @@ public class ClientManager extends Thread{
     public void startManager() throws IOException {
         input = new DataInputStream(this.clientSocket.getInputStream());
         output = new DataOutputStream(this.clientSocket.getOutputStream());
+        output.writeUTF(String.valueOf(identificator));
     }
 
     /**
@@ -57,13 +57,117 @@ public class ClientManager extends Thread{
                 System.out.println(msg);
                 if (msg.equalsIgnoreCase("EXIT")){
                     break;
+                } else if (msg == "HIS"){
+                    output.writeUTF("El historial esta en desarrollo");
+                } else{
+                    try {
+                        String expresion = encrypt(msg);
+                        String treenotation = postfix(expresion);
+                        Expression_tree expressionTree = new Expression_tree(treenotation);
+                        Node root = expressionTree.get_root();
+                        String result = String.valueOf(expressionTree.solve(root));
+                        output.writeUTF(result);
+                    } catch (ArithmeticException e){
+                        output.writeUTF("Syntax Error");
+                    }
                 }
-                output.writeUTF("Hola cliente #" + identificator);
             }
+            output.writeUTF("EXIT");
             closeChannel();
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Este método cambia de notación infija a notación postfija
+     * @param data
+     * @return Devuelve la expresión ya en notación postfija
+     */
+    public String postfix(String data){
+        Stack stack = new Stack();
+        String result = "";
+        for (int i = 0; i < data.length()-1; i++) {
+            char character = data.charAt(i);
+            if (character=='P' && data.charAt(i+1)!='(' && !operador(data.charAt(i+1))){
+                result+="P";
+            }else if (!operador(character) && character!='(' && character != ')' && character!='P') {
+                result += character;
+
+            } else if (operador(character)) {
+                stack.push(character);
+
+            } else if (character ==')') {;
+                while (!stack.empty()){
+                    result +=stack.pop();
+                }
+
+            }
+        }
+        return result += "P"; // se agrega la última P no sé si es necesaria lol
+    }
+
+    /**
+     *Nos indica si un caracter es un operador o no
+     * @param f un caracter para
+     * @return boolean
+     */
+    public boolean operador(char f){
+        if (f == '+'){
+            return true;
+        }else if (f == '-'){
+            return true;
+        }else if (f == 'x'){
+            return true;
+        }else if (f == '/'){
+            return true;
+        }else if (f == '%'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Identifica cuando hay un cambio entre números y símbolos para luego poder diferenciarlos en la notación postfija
+     * @param to_encrypt
+     * @return el string "encriptado"
+     */
+    public String encrypt(String to_encrypt) {
+        String result = "";
+        for (int i = 0; i < to_encrypt.length(); i++) {
+            if (!simbolos(to_encrypt.charAt(i))) {
+                result += String.valueOf(to_encrypt.charAt(i));
+            } else if (simbolos(to_encrypt.charAt(i))) {
+                result += "P" + to_encrypt.charAt(i) + "P";
+            }
+        }
+        //System.out.println(result);
+        return result + "P";
+    }
+
+    /**
+     * Identifica si un caracter es distinto de un número
+     * @param f
+     * @return true si no es un número y false si lo es
+     */
+    public boolean simbolos(char f){
+        if (f == '+'){
+            return true;
+        }else if (f == '-'){
+            return true;
+        }else if (f == 'x'){
+            return true;
+        }else if (f == '/'){
+            return true;
+        }else if (f == '%'){
+            return true;
+        }else if (f == '('){
+            return true;
+        }else if (f == ')') {
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

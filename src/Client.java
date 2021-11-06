@@ -87,12 +87,12 @@ public class Client {
     }
 
     public void createInterface(String nameFrame){
-        // Fonts that were are going to use in the components
+        // Fuentes que se van a usar en los componentes
         Font titlesFont = new Font("Cambria", Font.BOLD, 30);
         Font buttonsFont = new Font("Cambria", Font.BOLD, 25);
 
         //---------------------------------------------------------------
-        // First Panel that contents the screen where the numbers will appear
+        // Primer Panel donde se encuentra la pantalla donde se van a mostrar los números
         JPanel screen = new JPanel();
         screen.setLayout(new GridLayout(1,1, 10, 10)); // Layout that allows rescale the components in diferent sizes of frame
 
@@ -106,11 +106,11 @@ public class Client {
         Border border = BorderFactory.createLineBorder(Color.BLACK, 3); // Black Border of the Label
         textField.setBorder(border);
         screen.add(textField);
-        // End of the First Panel
+        // Final del Primer Panel
         //-----------------------------------------------------------------
 
         //---------------------------------------------------------------
-        // Second Panel that contents the first row of buttons
+        // Segundo Panel que contiene la Primera Fila de Botones
         JPanel buttonRow1 = new JPanel();
         buttonRow1.setLayout(new GridLayout(1,4,10,10));
         JButton button1 = new JButton("HIS");
@@ -143,11 +143,11 @@ public class Client {
         buttonRow1.add(button2);
         buttonRow1.add(button3);
         buttonRow1.add(button4);
-        // End of the Second Panel
+        // Final del Segundo Panel
         //--------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------
-        // Third Panel that contents the second row of buttons
+        // Tercer Panel que contiene la Segunda Fila de Botones
         JPanel buttonRow2 = new JPanel();
         buttonRow2.setLayout(new GridLayout(1,4,10,10));
         JButton button5 = new JButton("7");
@@ -193,11 +193,11 @@ public class Client {
         buttonRow2.add(button6);
         buttonRow2.add(button7);
         buttonRow2.add(button8);
-        // End of the Third Panel
+        // Fin del Tercer Panel
         //------------------------------------------------------------------------------
 
         //-------------------------------------------------------------------------------
-        // Fourth Panel that contents the third row of buttons
+        // Cuarto Panel que contiene la Tercera Fila de Botones
         JPanel buttonRow3 = new JPanel();
         buttonRow3.setLayout(new GridLayout(1,4,10,10));
         JButton button9 = new JButton("4");
@@ -243,11 +243,11 @@ public class Client {
         buttonRow3.add(button10);
         buttonRow3.add(button11);
         buttonRow3.add(button12);
-        // End of the Fourth Panel
+        // Fin del cuarto Panel
         //------------------------------------------------------------------------------
 
         //------------------------------------------------------------------------------
-        // Fifth Panel that contents the fourth row of buttons-
+        // Quinto Panel que contiene la Cuarta Fila de Botones
         JPanel buttonRow4 = new JPanel();
         buttonRow4.setLayout(new GridLayout(1,4,10,10));
         JButton button13 = new JButton("1");
@@ -294,11 +294,11 @@ public class Client {
         buttonRow4.add(button14);
         buttonRow4.add(button15);
         buttonRow4.add(button16);
-        // End of the Fifth
+        // Fin del Quinto Panel
         //------------------------------------------------------------------------------
 
         //------------------------------------------------------------------------------
-        // Sixth Panel that contents the fifth and last row of buttons
+        // Sexto Panel que contiene la Quinto Fila de Botones
         JPanel buttonRow5 = new JPanel();
         buttonRow5.setLayout(new GridLayout(1,4,10,10));
         JButton button17 = new JButton("0");
@@ -339,15 +339,14 @@ public class Client {
             this.showing_result = false;
         });
         button20.setFont(buttonsFont);
-        //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
         buttonRow5.add(button17);
         buttonRow5.add(button18);
         buttonRow5.add(button19);
         buttonRow5.add(button20);
-        // End of the Fifth
+        // Final del Sexto Panel
         //-------------------------------------------------------------------------------------
 
-        // Start of the Sixth
+        // Séptimo Panel que contiene la Sexta Fila de Botones
         //------------------------------------------------------------------------------------
         JPanel buttonRow6 = new JPanel();
         buttonRow6.setLayout(new GridLayout(1,4,10,10));
@@ -387,33 +386,32 @@ public class Client {
         button24.addActionListener(e -> {
             String expresion = textField.getText().replace(" ", "");
             try {
-                //expresion+=")";
                 sendMessage(expresion);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
-
-
         button21.setFont(buttonsFont);
-        //button20.addActionListener(e -> textField.setText(textField.getText() + "4"));
         buttonRow6.add(button21);
         buttonRow6.add(button22);
         buttonRow6.add(button23);
         buttonRow6.add(button24);
+        // Fin del Séptimo Panel
         //-----------------------------------------------------------------
-        // Creation and set the parameters of the main frame
+
+        //-----------------------------------------------------------------
+        // Creación del Frame Principal y sus Características
         root = new JFrame();
         root.setLayout(new GridLayout(7, 1, 10,10));
         root.setSize(410, 500);
         root.setTitle(nameFrame);
         root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Creation and Add the icon of the Window
+        // Asignarle un ícono al Frame
         ImageIcon icon = new ImageIcon("images/icono.jpg");
         root.setIconImage(icon.getImage());
 
-            // Add all the components
+            // Añadir todos los componentes al Frame
         root.add(screen);
         root.add(buttonRow1);
         root.add(buttonRow2);
@@ -422,25 +420,42 @@ public class Client {
         root.add(buttonRow5);
         root.add(buttonRow6);
 
-        // Show the window
+        // Mostrar la Ventana
         root.setVisible(true);
-        // End of the main frame
+        // Final de la Interfaz de la Calculadora
         //------------------------------------------------------------------
     }
 
-    public void createRecord(String recordClient, String nameFrame) {
+    /**
+     * Método que crea la interfaz correspondiente al historial de dicho usuario
+     * @param recordClient
+     * @param nameFrame
+     */
+    public void createRecord(String recordClient, String nameFrame){
+
+        // Si ya hay un frame en pantalla lo elimina
+        if (record != null){
+            record.dispose();
+        }
+
+        // Fuentes de letra y bordes de Labels
         Font titlesFont = new Font("Cambria", Font.BOLD, 25);
         Font recordFont = new Font("Cambria", Font.BOLD, 20);
         Border titleBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Black Border of the Label
         Border textBorder = BorderFactory.createLineBorder(Color.BLACK, 1); // Black Border of the Label
+        ImageIcon icon = new ImageIcon("images/icono.jpg");
 
+        // Historial del cliente divido en una lista
         String[] parts = recordClient.split(",");
-        System.out.println(parts);
+
+        //-------------------------------------------------------
+        // Creación de todos los componentes de la Interfaz
         record = new JFrame();
         record.setLayout(new GridLayout(parts.length / 5 + 1, 5, 5, 5));
         record.setSize(1000, (parts.length / 5 * 50) + 50);
         record.setTitle(nameFrame);
         record.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        record.setIconImage(icon.getImage());
 
         JLabel client = new JLabel("Cliente");
         client.setFont(titlesFont);
@@ -497,6 +512,9 @@ public class Client {
             components[i].setHorizontalAlignment(JLabel.CENTER);
             record.add(components[i]);
         }
+        //------------------------------------------------------
+
+        // Se hace el Frame visible
         record.setVisible(true);
     }
 }

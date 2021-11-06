@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-
+/**
+ * Clase correspondiente al árbol de expresión, aquí se crea mediante nodos y se resuelve mediante recursividad
+ */
 public class Expression_tree {
     Node root;
 

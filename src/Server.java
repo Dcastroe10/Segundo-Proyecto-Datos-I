@@ -31,7 +31,7 @@ public class Server {
         while (true){ // Se queda en espera de clientes que quieran conectarse
             Socket clientSocket = serverSocket.accept(); //acepta a un cliente
             int identificator = clientsList.size() + 1;
-            ClientManager clientManager = new ClientManager(clientSocket, clientsList, identificator); // Le asigna un administrador
+            ClientManager clientManager = new ClientManager(clientSocket, identificator); // Le asigna un administrador
             clientsList.add(clientManager); // lo agrega a la lista de clientes
             clientManager.start();
             System.out.println("Se conectó un nuevo cliente");
@@ -48,7 +48,7 @@ public class Server {
 
     /**
      * Método main de la clase que se encarga de crear una instancia nueva del servidor y llamar las funciones que lo inician
-     * @param args
+     * @param args argumentos de la clase main
      */
     public static void main(String[] args) {
         Server server = new Server();

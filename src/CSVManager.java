@@ -8,16 +8,16 @@ import java.util.GregorianCalendar;
  * Clase encargada de la administración, lectura y escritura del documento .csv
  */
 public class CSVManager {
-    public BufferedReader csvreader = null;
-    public BufferedWriter csvwriter = null;
-    public FileWriter filewriter = null;
-    public PrintWriter printWriter = null;
-    public String filepath = "src\\Historial.csv";
+    public BufferedReader csvreader = null; //lector de archivos
+    public BufferedWriter csvwriter = null; // escritor de archivos
+    public FileWriter filewriter = null; // escritor de archivos complementario
+    public PrintWriter printWriter = null; // otro escritor de archivos complementario :)
+    public String filepath = "src\\Historial.csv"; //dirección del archivo editado
 
     /**
      * Método encargado de leer el archivo y regresar los datos que empiecen únicamente con el identificador dado
-     * @param identificator numero que se va a utilizar para clasificar los archivos
-     * @return devuelve un string con todos los dados obtenido en base al identificador
+     * @param identificator número que se va a utilizar para clasificar los archivos
+     * @return devuelve un string con todos los dados obtenido con base al identificador
      */
     public String readFiles(int identificator) {
         String record = "";
@@ -38,7 +38,7 @@ public class CSVManager {
             return record;
         } catch (Exception e) {
             e.printStackTrace();
-            return "Skere";
+            return "No se pudo leer el archivo";
         }
     }
 

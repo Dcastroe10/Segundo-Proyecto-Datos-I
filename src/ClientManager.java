@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Clase encargada de encargarse de la comunicación e interpretación de cada cliente en específico.
@@ -14,18 +13,14 @@ public class ClientManager extends Thread{
     private DataInputStream input;
     private DataOutputStream output;
     public int identificator;
-    private final Stack1 expresions = new Stack1();
-    private final Stack1 operations = new Stack1();
-
-
+    private final Stack expresions = new Stack();
 
     /**
      * Método constructor de la clase, se encarga de definir los atributos de la clase.
      * @param socket dirección de la conexión por sockets de un cliente específico.
-     * @param clientsList lista que contiene los clientes conectados al servidor.
      * @param identificator número del cliente que está vinculado al administrador.
      */
-    public ClientManager(Socket socket, ArrayList<ClientManager> clientsList, int identificator) {
+    public ClientManager(Socket socket, int identificator) {
         this.clientSocket = socket;
         this.identificator = identificator;
     }
@@ -76,7 +71,7 @@ public class ClientManager extends Thread{
                         String result = String.valueOf(expressionTree.solve(root));
                         output.writeUTF(result);
                         CSVManager manager = new CSVManager();
-                        manager.writeFiles(identificator, msg.substring(0, msg.length()-1), result);
+                        manager.writeFiles(identificator, msg, result);
 
                     } catch (Exception e){
                         output.writeUTF("Syntax Error");
@@ -188,13 +183,4 @@ public class ClientManager extends Thread{
         }
         return result+"P";
     }
-
-
-
-
-
-
-
-
-
 }

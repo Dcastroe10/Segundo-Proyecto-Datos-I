@@ -1,7 +1,10 @@
+/**
+ * Clase correspondiente al nodo de los arboles, posee un puntero hacia el hijo izquierdo y otro hacia el derecho
+ */
 public class Node {
-    public Object data;
-    public Node left;
-    public Node right;
+    public Object data; // Información que almacena
+    public Node left; // Puntero al hijo izquierdo
+    public Node right; // Puntero al hijo derecho
 
     /**
      * Crea un nodo con los datos ingresados, se utiliza para la creación del árbol de expresión
@@ -13,6 +16,9 @@ public class Node {
         this.left = null;
     }
 
+    /**
+     * Método constructor de la clase, define en null los punteros a los nodos izquierdo y derecho
+     */
     public Node(){
         this.right = null;
         this.left = null;
